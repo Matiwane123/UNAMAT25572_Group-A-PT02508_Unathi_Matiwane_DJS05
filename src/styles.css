@@ -1,0 +1,315 @@
+:root {
+  color-scheme: light;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: #f5f7fb;
+  color: #1d2939;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+}
+
+.page-header p {
+  margin: 0;
+  color: #475569;
+}
+
+.controls-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.controls-card label {
+  display: grid;
+  gap: 8px;
+  color: #334155;
+}
+
+.controls-card input,
+.controls-card select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.status-banner {
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: #e2e8f0;
+  color: #0f172a;
+  margin-bottom: 24px;
+}
+
+.status-banner.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.show-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.show-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 22px;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.show-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+}
+
+.show-link {
+  color: inherit;
+  text-decoration: none;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
+}
+
+.show-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.show-card-body {
+  padding: 18px;
+}
+
+.show-card-body h2 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.show-card-body p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pagination-bar button {
+  border: none;
+  background: #1d4ed8;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+
+.pagination-bar button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 28px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+}
+
+.detail-hero {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.detail-hero img {
+  width: 100%;
+  border-radius: 24px;
+  object-fit: cover;
+  min-height: 320px;
+}
+
+.detail-meta h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+
+.detail-meta p {
+  margin-top: 0;
+  color: #475569;
+  line-height: 1.8;
+}
+
+.detail-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.genre-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.genre-pill {
+  background: #e0e7ff;
+  color: #3730a3;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+}
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: #1d4ed8;
+  padding: 0;
+  font: inherit;
+}
+
+.season-section {
+  margin-top: 36px;
+}
+
+.season-navigation {
+  display: grid;
+  gap: 18px;
+}
+
+.season-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.season-tab {
+  text-align: left;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.season-tab.active {
+  border-color: #1d4ed8;
+  background: #eff6ff;
+}
+
+.season-tab span {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.season-tab small {
+  color: #475569;
+}
+
+.episode-list {
+  display: grid;
+  gap: 16px;
+}
+
+.episode-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.episode-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.episode-headline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.episode-number {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.episode-card h4 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 860px) {
+  .detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .episode-card {
+    grid-template-columns: 1fr;
+  }
+}
