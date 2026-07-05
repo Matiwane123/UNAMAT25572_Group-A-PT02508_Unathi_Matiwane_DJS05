@@ -12,16 +12,22 @@ export default function HomePage() {
   const [error, setError] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [genreFilter, setGenreFilter] = useState("");
+  const [letterFilter, setLetterFilter] = useState("");
+  const [sortOrder, setSortOrder] = useState("az");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const search = searchParams.get("search") ?? "";
     const genre = searchParams.get("genre") ?? "";
+    const sort = searchParams.get("sort") ?? "az";
+    const letter = searchParams.get("letter") ?? "";
     const page = Number(searchParams.get("page")) || 1;
 
     setSearchValue(search);
     setGenreFilter(genre);
+    setLetterFilter(letter);
+    setSortOrder(sort === "za" ? "za" : "az");
     setCurrentPage(page);
   }, [searchParams]);
 
@@ -38,7 +44,7 @@ export default function HomePage() {
   const filteredShows = useMemo(() => {
     return shows
       .filter((show) => {
-        const matchesSearch = show.title
+        const matchesSearch = String(show.title || "")
           .toLowerCase()
           .includes(searchValue.toLowerCase());
         const matchesGenre = genreFilter
@@ -46,8 +52,17 @@ export default function HomePage() {
           : true;
         return matchesSearch && matchesGenre;
       })
-      .sort((a, b) => a.title.localeCompare(b.title));
-  }, [shows, searchValue, genreFilter]);
+      .sort((a, b) => {
+        const titleA = String(a.title || "").toLowerCase();
+        const titleB = String(b.title || "").toLowerCase();
+
+        if (sortOrder === "za") {
+          return titleB.localeCompare(titleA, undefined, { sensitivity: "base" });
+        }
+
+        return titleA.localeCompare(titleB, undefined, { sensitivity: "base" });
+      });
+  }, [shows, searchValue, genreFilter, sortOrder]);
 
   const totalPages = Math.max(1, Math.ceil(filteredShows.length / PAGE_SIZE));
   const currentShows = filteredShows.slice(
@@ -72,6 +87,11 @@ export default function HomePage() {
   const handleGenreChange = (event) => {
     setGenreFilter(event.target.value);
     updateQuery({ genre: event.target.value, page: "1" });
+  };
+
+  const handleLetterChange = (value) => {
+    setLetterFilter(value);
+    updateQuery({ letter: value, page: "1" });
   };
 
   const handlePageChange = (newPage) => {
@@ -103,6 +123,21 @@ export default function HomePage() {
                 {genre.title}
               </option>
             ))}
+          </select>
+        </label>
+
+        <label>
+          Sort
+          <select value={letterFilter} onChange={(event) => handleLetterChange(event.target.value)}>
+            <option value="">All letters</option>
+            {[...Array(26)].map((_, index) => {
+              const letter = String.fromCharCode(65 + index);
+              return (
+                <option key={letter} value={letter}>
+                  {letter}
+                </option>
+              );
+            })}
           </select>
         </label>
       </section>
