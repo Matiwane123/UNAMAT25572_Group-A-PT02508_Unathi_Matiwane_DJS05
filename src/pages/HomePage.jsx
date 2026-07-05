@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetchShowPreviews, GENRE_TITLES } from "../services/podcastService.js";
-import { formatDate } from "../utils/date.js";
+import { fetchShowPreviews } from "../services/podcastService.js";
+import { genres as genreOptions } from "../data.js";
+import AppHeader from "../components/AppHeader.jsx";
 
 const PAGE_SIZE = 12;
 
@@ -41,7 +42,7 @@ export default function HomePage() {
           .toLowerCase()
           .includes(searchValue.toLowerCase());
         const matchesGenre = genreFilter
-          ? show.genre_ids.includes(Number(genreFilter))
+          ? show.genres?.includes(Number(genreFilter))
           : true;
         return matchesSearch && matchesGenre;
       })
@@ -80,12 +81,7 @@ export default function HomePage() {
 
   return (
     <div className="page-layout">
-      <header className="page-header">
-        <h1>Podcast Shows</h1>
-        <p>
-          Browse podcast series, filter by genre, and open show detail pages.
-        </p>
-      </header>
+      <AppHeader />
 
       <section className="controls-card">
         <label>
@@ -102,9 +98,9 @@ export default function HomePage() {
           Genre
           <select value={genreFilter} onChange={handleGenreChange}>
             <option value="">All genres</option>
-            {Object.entries(GENRE_TITLES).map(([id, title]) => (
-              <option key={id} value={id}>
-                {title}
+            {genreOptions.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.title}
               </option>
             ))}
           </select>

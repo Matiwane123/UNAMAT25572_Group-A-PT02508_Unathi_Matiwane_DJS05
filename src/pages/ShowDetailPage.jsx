@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { fetchShowById, GENRE_TITLES } from "../services/podcastService.js";
+import { genres as genreDefinitions } from "../data.js";
 import { formatDate } from "../utils/date.js";
 import SeasonNavigation from "../components/SeasonNavigation.jsx";
+import AppHeader from "../components/AppHeader.jsx";
 
 export default function ShowDetailPage() {
   const { id } = useParams();
@@ -33,8 +35,23 @@ export default function ShowDetailPage() {
   }, [id]);
 
   const genres = useMemo(() => {
-    if (!show?.genre_ids) return [];
-    return show.genre_ids.map((genreId) => GENRE_TITLES[genreId] ?? "Unknown");
+    if (!show?.genres) return [];
+
+    return show.genres.map((genreValue) => {
+      if (typeof genreValue === "number") {
+        return GENRE_TITLES[genreValue] ?? "Unknown";
+      }
+
+      if (typeof genreValue === "string") {
+        const match = genreDefinitions.find(
+          (genre) =>
+            genre.title === genreValue || String(genre.id) === genreValue,
+        );
+        return match ? match.title : genreValue;
+      }
+
+      return "Unknown";
+    });
   }, [show]);
 
   const goBack = () => {
@@ -47,12 +64,13 @@ export default function ShowDetailPage() {
 
   return (
     <div className="page-layout">
-      <header className="page-header">
+      <AppHeader />
+      <div className="page-header page-header--detail">
         <button className="back-button" onClick={goBack}>
           ← Back to shows
         </button>
         <h1>Show Details</h1>
-      </header>
+      </div>
 
       {isLoading && (
         <div className="status-banner">Loading show details...</div>
